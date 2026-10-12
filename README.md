@@ -24,7 +24,7 @@ La aplicación cuenta con las siguientes funcionalidades:
 - Validación de campos obligatorios.
 - Prevención del registro de usuarios duplicados.
 - Inicio de sesión mediante usuario y contraseña.
-- Almacenamiento seguro de contraseñas mediante hash.
+- Almacenamiento de contraseñas mediante hash.
 - Página HTML de bienvenida accesible mediante el endpoint `/tareas`.
 - Manejo de respuestas HTTP para indicar resultados y errores.
 
@@ -81,9 +81,7 @@ Si el usuario no existe o la contraseña es incorrecta, la API devuelve el códi
 
 Devuelve una página HTML de bienvenida que permite comprobar que el servidor Flask está funcionando correctamente.
 
-**URL local:**
-
-`http://127.0.0.1:5000/tareas`
+**URL local:** http://127.0.0.1:5000/tareas
 
 **Método:** GET.
 
@@ -115,6 +113,7 @@ De esta manera, la contraseña original no se guarda en texto plano.
 
 - Tener Python instalado.
 - Contar con los archivos del proyecto.
+- Disponer de una terminal para ejecutar los comandos.
 
 ### Instalación de dependencias
 
@@ -124,19 +123,25 @@ Abrir una terminal en la carpeta del proyecto y ejecutar:
 pip install -r requirements.txt
 ```
 
-Este archivo contiene las dependencias necesarias para ejecutar el servidor Flask y el cliente de consola.
+El archivo `requirements.txt` contiene las dependencias necesarias para ejecutar la aplicación.
 
 ### Ejecución del servidor
+
+Ejecutar el siguiente comando:
 
 ```bash
 python servidor.py
 ```
 
-El servidor estará disponible en `http://127.0.0.1:5000`.
+El servidor estará disponible en:
+
+http://127.0.0.1:5000
+
+La base de datos `usuarios.db` y la tabla `usuarios` se crean automáticamente al iniciar el servidor, si todavía no existen.
 
 ### Ejecución del cliente de consola
 
-Abrir una segunda terminal y ejecutar:
+Abrir una segunda terminal, dentro de la carpeta del proyecto, y ejecutar:
 
 ```bash
 python cliente.py
@@ -158,17 +163,15 @@ Se realizaron pruebas para verificar el funcionamiento de la API:
 
 ## 8. Evidencias de ejecución
 
-En la carpeta `capturas/` se incluyen imágenes que documentan la ejecución del servidor y las pruebas realizadas.
+En la carpeta `capturas/` se incluyen imágenes que documentan el funcionamiento correcto de la aplicación.
 
-Las evidencias contemplan:
+Las evidencias corresponden a las siguientes pruebas exitosas:
 
-- Inicio del servidor Flask.
-- Registro de un usuario.
-- Registro de un usuario existente (incorrecto)
-- Inicio de sesión correcto.
-- Rechazo de credenciales incorrectas.
-- Consulta de la página HTML de bienvenida.
-- Verificación del hash almacenado en SQLite.
+- Inicio del servidor Flask (`servidor.png`).
+- Registro exitoso de un usuario (`registro.png`).
+- Inicio de sesión correcto (`login.png`).
+- Consulta de la página HTML de bienvenida (`tareas.png`).
+- Verificación del hash almacenado en SQLite (`hash_sqlite.png`).
 
 ## 9. Conclusión
 
@@ -182,7 +185,7 @@ También permitió incorporar buenas prácticas de seguridad mediante el almacen
 
 Hashear contraseñas permite almacenarlas de forma más segura, sin guardar el texto original en la base de datos. Si alguien accede a la base de datos, no encontrará directamente las contraseñas de los usuarios.
 
-En este proyecto se utiliza generate_password_hash() de Werkzeug para generar el hash y check_password_hash() para verificar las credenciales durante el inicio de sesión.
+En este proyecto se utiliza `generate_password_hash()` de Werkzeug para generar el hash y `check_password_hash()` para verificar las credenciales durante el inicio de sesión.
 
 ### ¿Cuáles son las ventajas de usar SQLite en este proyecto?
 
@@ -190,18 +193,20 @@ SQLite permite almacenar los datos de manera persistente en un archivo local, si
 
 Sus principales ventajas en este proyecto son:
 
-- Simplicidad: es fácil de configurar y utilizar desde Python.
-
-- Persistencia: los usuarios registrados permanecen almacenados después de cerrar la aplicación.
-
-- Portabilidad: la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
-
-- Integración: Python incluye el módulo sqlite3, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
+- **Simplicidad:** es fácil de configurar y utilizar desde Python.
+- **Persistencia:** los usuarios registrados permanecen almacenados después de cerrar la aplicación.
+- **Portabilidad:** la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
+- **Integración:** Python incluye el módulo `sqlite3`, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
 
 ## 11. Configuración del entorno de desarrollo
 
 Se recomienda configurar el entorno de Python en Visual Studio Code según las necesidades de cada desarrollador.
 
-La carpeta .vscode/ contiene configuraciones locales del editor y no es necesaria para ejecutar la aplicación. Por este motivo, se excluye del repositorio mediante el archivo .gitignore.
+La carpeta `.vscode/` contiene configuraciones locales del editor y no es necesaria para ejecutar la aplicación. Por este motivo, se excluye del repositorio mediante el archivo `.gitignore`.
 
 Al clonar el proyecto, cada desarrollador deberá seleccionar o configurar el intérprete de Python que utilizará en su entorno de trabajo.
+
+## 12. Enlaces del proyecto
+
+- **Repositorio en GitHub:** https://github.com/Pao-1112/PFO2-Sistema-Gestion-Tareas.git
+- **Documentación publicada en GitHub Pages:** 
