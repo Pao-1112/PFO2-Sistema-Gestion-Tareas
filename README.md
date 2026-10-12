@@ -204,7 +204,7 @@ Se realizaron pruebas para verificar el funcionamiento de los componentes princi
 - Respuesta del endpoint `GET /tareas`.
 - Verificación del almacenamiento de la contraseña mediante un hash en SQLite.
 
-### 9. Evidencias de ejecución
+## 9. Evidencias de ejecución
 
 - Las evidencias corresponden a las siguientes pruebas:
 - Inicio del servidor Flask (servidor.png y servidor1.png).
