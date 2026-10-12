@@ -209,4 +209,4 @@ Al clonar el proyecto, cada desarrollador deberá seleccionar o configurar el in
 ## 12. Enlaces del proyecto
 
 - **Repositorio en GitHub:** https://github.com/Pao-1112/PFO2-Sistema-Gestion-Tareas.git
-- **Documentación publicada en GitHub Pages:** 
+- **Documentación publicada en GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/ 
