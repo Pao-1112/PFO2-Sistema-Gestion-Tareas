@@ -245,10 +245,10 @@ En este proyecto se utiliza `generate_password_hash()` de Werkzeug para generar 
 ### ¿Cuáles son las ventajas de usar SQLite en este proyecto?
 SQLite permite almacenar los datos de manera persistente en un archivo local, sin necesidad de instalar ni administrar un servidor de base de datos independiente.
 Sus principales ventajas en este proyecto son:
-Simplicidad: es fácil de configurar y utilizar desde Python.
-Persistencia: los usuarios registrados permanecen almacenados después de cerrar la aplicación.
-Portabilidad: la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
-Integración: Python incluye el módulo `sqlite3`, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
+- Simplicidad: es fácil de configurar y utilizar desde Python.
+- Persistencia: los usuarios registrados permanecen almacenados después de cerrar la aplicación.
+- Portabilidad: la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
+- Integración: Python incluye el módulo `sqlite3`, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
 
 ## 12. Enlaces del proyecto
 
