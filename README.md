@@ -38,7 +38,7 @@ Permite registrar un usuario nuevo.
 
 ```json
 {
-  "usuario": "paola",
+  "usuario": "nombre",
   "contraseña": "1234"
 }
 ```
@@ -61,7 +61,7 @@ Permite autenticar a un usuario registrado.
 
 ```json
 {
-  "usuario": "paola",
+  "usuario": "nombre",
   "contraseña": "1234"
 }
 ```
@@ -71,7 +71,7 @@ Permite autenticar a un usuario registrado.
 ```json
 {
   "mensaje": "Inicio de sesión correcto.",
-  "usuario": "paola"
+  "usuario": "nombre"
 }
 ```
 
@@ -81,9 +81,8 @@ Si el usuario no existe o la contraseña es incorrecta, la API devuelve el códi
 
 Devuelve una página HTML de bienvenida que permite comprobar que el servidor Flask está funcionando correctamente.
 
-**URL local:** http://127.0.0.1:5000/tareas
-
-**Método:** GET.
+- **Método:** GET.
+- **URL local:** http://127.0.0.1:5000/tareas
 
 ## 5. Base de datos SQLite
 
@@ -139,6 +138,8 @@ http://127.0.0.1:5000
 
 La base de datos `usuarios.db` y la tabla `usuarios` se crean automáticamente al iniciar el servidor, si todavía no existen.
 
+Se debe mantener abierta la terminal del servidor mientras se realizan las pruebas.
+
 ### Ejecución del cliente de consola
 
 Abrir una segunda terminal, dentro de la carpeta del proyecto, y ejecutar:
@@ -163,21 +164,23 @@ Se realizaron pruebas para verificar el funcionamiento de la API:
 
 ## 8. Evidencias de ejecución
 
-En la carpeta `capturas/` se incluyen imágenes que documentan el funcionamiento correcto de la aplicación.
+En la carpeta `capturas/` se incluyen imágenes que documentan el funcionamiento de la aplicación.
 
-Las evidencias corresponden a las siguientes pruebas exitosas:
+Las evidencias corresponden a las siguientes pruebas:
 
-- Inicio del servidor Flask (`servidor.png`).
+- Inicio del servidor Flask (`servidor.png` y `servidor1.png`).
 - Registro exitoso de un usuario (`registro.png`).
 - Inicio de sesión correcto (`login.png`).
 - Consulta de la página HTML de bienvenida (`tareas.png`).
-- Verificación del hash almacenado en SQLite (`hash_sqlite.png`).
+- Verificación del hash almacenado en SQLite (`hash_sqlite.png` y `hash_sqlite1.png`).
 
 ## 9. Conclusión
 
 El desarrollo permitió aplicar los conceptos de creación de API REST con Flask, manejo de solicitudes HTTP, persistencia de datos con SQLite y autenticación de usuarios.
 
 También permitió incorporar buenas prácticas de seguridad mediante el almacenamiento de contraseñas con hash, evitando conservar las contraseñas originales en texto plano.
+
+El código fuente y la documentación complementaria se encuentran disponibles en el repositorio de GitHub indicado al final de este documento.
 
 ## 10. Respuestas conceptuales
 
@@ -208,5 +211,5 @@ Al clonar el proyecto, cada desarrollador deberá seleccionar o configurar el in
 
 ## 12. Enlaces del proyecto
 
-- **Repositorio en GitHub:** https://github.com/Pao-1112/PFO2-Sistema-Gestion-Tareas.git
-- **Documentación publicada en GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/ 
+- **Repositorio en GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
+- **Documentación publicada en GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
