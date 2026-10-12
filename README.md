@@ -208,10 +208,22 @@ Se realizaron pruebas para verificar el funcionamiento de los componentes princi
 
 - Las evidencias corresponden a las siguientes pruebas:
 - Inicio del servidor Flask (servidor.png y servidor1.png).
+![Inicio del servidor](capturas/servidor.png)
+![Inicio del servidor](capturas/servidor1.png)
+
 - Registro exitoso de un usuario (registro.png).
+![Registro de usuario](capturas/registro.png)
+
 - Inicio de sesión correcto (login.png).
+![Inicio de sesión](capturas/login.png)
+
 - Consulta de la página HTML de bienvenida (tareas.png).
+![Consulta de tareas](capturas/tareas.png)
+
 - Verificación del hash almacenado en SQLite (hash_sqlite.png y hash_sqlite1.png).
+![Verificación de hash en SQLite](capturas/hash_sqlite.png)
+
+![Verificación de hash en SQLite](capturas/hash_sqlite1.png)
 
 Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/` del repositorio.
 
@@ -223,7 +235,22 @@ Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/
 - **El cliente no se conecta:** comprobar que el servidor esté activo y que el cliente utilice la dirección y el puerto correctos.
 - **No se encuentra el usuario:** verificar que se esté utilizando la misma base de datos `usuarios.db` y que las credenciales sean correctas.
 
-## 11. Enlaces del proyecto
+## 12. Preguntas Conceptuales
+
+### ¿Por qué hashear contraseñas?
+
+Hashear contraseñas permite almacenarlas de forma más segura, sin guardar el texto original en la base de datos. Si alguien accede a la base de datos, no encontrará directamente las contraseñas de los usuarios.
+En este proyecto se utiliza `generate_password_hash()` de Werkzeug para generar el hash y `check_password_hash()` para verificar las credenciales durante el inicio de sesión.
+
+### ¿Cuáles son las ventajas de usar SQLite en este proyecto?
+SQLite permite almacenar los datos de manera persistente en un archivo local, sin necesidad de instalar ni administrar un servidor de base de datos independiente.
+Sus principales ventajas en este proyecto son:
+Simplicidad: es fácil de configurar y utilizar desde Python.
+Persistencia: los usuarios registrados permanecen almacenados después de cerrar la aplicación.
+Portabilidad: la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
+Integración: Python incluye el módulo `sqlite3`, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
+
+## 13. Enlaces del proyecto
 
 - **Repositorio de GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
 - **GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
