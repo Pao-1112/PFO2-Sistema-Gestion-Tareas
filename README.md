@@ -98,23 +98,33 @@ La tabla `usuarios` contiene los siguientes campos:
 
 La tabla se crea automáticamente cuando se inicia la aplicación, si todavía no existe.
 
-### Seguridad de las contraseñas
-
-Las contraseñas se procesan mediante las funciones `generate_password_hash()` y `check_password_hash()` de Werkzeug.
-
-Al registrar un usuario, se genera un hash antes de guardar la contraseña en la base de datos. Al iniciar sesión, se verifica la contraseña ingresada contra el hash almacenado.
-
-De esta manera, la contraseña original no se guarda en texto plano.
+Las contraseñas se procesan mediante las funciones `generate_password_hash()` y `check_password_hash()` de Werkzeug. Al registrar un usuario, se genera un hash antes de almacenar la contraseña. Durante el inicio de sesión, se verifica la contraseña ingresada contra el hash almacenado.
 
 ## 6. Instalación y ejecución
 
-### Requisitos previos
+### 6.1. Requisitos previos
 
 - Tener Python instalado.
 - Contar con los archivos del proyecto.
 - Disponer de una terminal para ejecutar los comandos.
 
-### Instalación de dependencias
+### 6.2. Obtener los archivos del proyecto
+
+Clonar el repositorio de GitHub:
+
+```bash
+git clone https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas.git
+```
+
+Ingresar a la carpeta del proyecto:
+
+```bash
+cd PFO2-Sistema-Gestion-Tareas
+```
+
+También es posible descargar el repositorio como archivo ZIP desde GitHub y descomprimirlo.
+
+### 6.3. Instalar las dependencias
 
 Abrir una terminal en la carpeta del proyecto y ejecutar:
 
@@ -124,7 +134,13 @@ pip install -r requirements.txt
 
 El archivo `requirements.txt` contiene las dependencias necesarias para ejecutar la aplicación.
 
-### Ejecución del servidor
+Si el comando `pip` no funciona, se puede intentar con:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 6.4. Ejecutar el servidor
 
 Ejecutar el siguiente comando:
 
@@ -140,7 +156,7 @@ La base de datos `usuarios.db` y la tabla `usuarios` se crean automáticamente a
 
 Se debe mantener abierta la terminal del servidor mientras se realizan las pruebas.
 
-### Ejecución del cliente de consola
+### 6.5. Ejecutar el cliente de consola
 
 Abrir una segunda terminal, dentro de la carpeta del proyecto, y ejecutar:
 
@@ -149,6 +165,19 @@ python cliente.py
 ```
 
 El cliente permite interactuar con la API para registrar usuarios, iniciar sesión y consultar el endpoint de tareas.
+
+### 6.6. Probar el sistema
+
+Para comprobar el funcionamiento de la aplicación:
+
+1. Iniciar el servidor con `python servidor.py`.
+2. Abrir una segunda terminal y ejecutar `python cliente.py`.
+3. Registrar un usuario utilizando las credenciales indicadas por la consigna: usuario `nombre` y contraseña `1234`.
+4. Iniciar sesión con esas credenciales.
+5. Consultar el endpoint de tareas.
+6. Verificar que las operaciones devuelvan las respuestas esperadas.
+
+Si el usuario ya fue registrado anteriormente en la base de datos, no es necesario registrarlo otra vez para probar el inicio de sesión.
 
 ## 7. Pruebas realizadas
 
@@ -174,42 +203,34 @@ Las evidencias corresponden a las siguientes pruebas:
 - Consulta de la página HTML de bienvenida (`tareas.png`).
 - Verificación del hash almacenado en SQLite (`hash_sqlite.png` y `hash_sqlite1.png`).
 
-## 9. Conclusión
+## 9. Configuración del entorno de desarrollo
 
-El desarrollo permitió aplicar los conceptos de creación de API REST con Flask, manejo de solicitudes HTTP, persistencia de datos con SQLite y autenticación de usuarios.
+Se recomienda utilizar Visual Studio Code u otro editor compatible con Python.
 
-También permitió incorporar buenas prácticas de seguridad mediante el almacenamiento de contraseñas con hash, evitando conservar las contraseñas originales en texto plano.
+### Selección del intérprete de Python en Visual Studio Code
 
-El código fuente y la documentación complementaria se encuentran disponibles en el repositorio de GitHub indicado al final de este documento.
+Si el proyecto no se ejecuta correctamente, verificar que Visual Studio Code esté utilizando una instalación válida de Python.
 
-## 10. Respuestas conceptuales
+Para seleccionar el intérprete:
 
-### ¿Por qué hashear contraseñas?
+1. Abrir la carpeta del proyecto en Visual Studio Code.
+2. Presionar `Ctrl + Shift + P`.
+3. Buscar la opción `Python: Select Interpreter`.
+4. Seleccionar la instalación de Python correspondiente al entorno de trabajo.
 
-Hashear contraseñas permite almacenarlas de forma más segura, sin guardar el texto original en la base de datos. Si alguien accede a la base de datos, no encontrará directamente las contraseñas de los usuarios.
-
-En este proyecto se utiliza `generate_password_hash()` de Werkzeug para generar el hash y `check_password_hash()` para verificar las credenciales durante el inicio de sesión.
-
-### ¿Cuáles son las ventajas de usar SQLite en este proyecto?
-
-SQLite permite almacenar los datos de manera persistente en un archivo local, sin necesidad de instalar ni administrar un servidor de base de datos independiente.
-
-Sus principales ventajas en este proyecto son:
-
-- **Simplicidad:** es fácil de configurar y utilizar desde Python.
-- **Persistencia:** los usuarios registrados permanecen almacenados después de cerrar la aplicación.
-- **Portabilidad:** la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
-- **Integración:** Python incluye el módulo `sqlite3`, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
-
-## 11. Configuración del entorno de desarrollo
-
-Se recomienda configurar el entorno de Python en Visual Studio Code según las necesidades de cada desarrollador.
+Si se utiliza un entorno virtual, debe seleccionarse el intérprete de ese entorno y asegurarse de que las dependencias estén instaladas allí.
 
 La carpeta `.vscode/` contiene configuraciones locales del editor y no es necesaria para ejecutar la aplicación. Por este motivo, se excluye del repositorio mediante el archivo `.gitignore`.
 
-Al clonar el proyecto, cada desarrollador deberá seleccionar o configurar el intérprete de Python que utilizará en su entorno de trabajo.
+### Solución de problemas frecuentes
 
-## 12. Enlaces del proyecto
+- **Python no se reconoce como comando:** comprobar que esté instalado y disponible en el PATH del sistema. En Windows también se puede intentar ejecutar `py servidor.py`.
+- **No se encuentra Flask o Requests:** instalar las dependencias con `python -m pip install -r requirements.txt`.
+- **El puerto 5000 está ocupado:** verificar que no exista otra aplicación utilizando ese puerto.
+- **No se puede conectar con el servidor:** comprobar que `servidor.py` siga ejecutándose y que el cliente utilice la dirección `http://127.0.0.1:5000`.
+- **No aparecen los usuarios registrados:** comprobar que se esté utilizando el mismo archivo `usuarios.db` y que el servidor se ejecute desde la carpeta correcta.
+
+## 10. Enlaces del proyecto
 
 - **Repositorio en GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
 - **Documentación publicada en GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
