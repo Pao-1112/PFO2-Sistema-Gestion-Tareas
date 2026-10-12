@@ -235,7 +235,7 @@ Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/
 - **El cliente no se conecta:** comprobar que el servidor esté activo y que el cliente utilice la dirección y el puerto correctos.
 - **No se encuentra el usuario:** verificar que se esté utilizando la misma base de datos `usuarios.db` y que las credenciales sean correctas.
 
-## 12. Preguntas Conceptuales
+## 11. Preguntas Conceptuales
 
 ### ¿Por qué hashear contraseñas?
 
@@ -250,7 +250,7 @@ Persistencia: los usuarios registrados permanecen almacenados después de cerrar
 Portabilidad: la base de datos se conserva en un archivo que puede trasladarse junto con el proyecto.
 Integración: Python incluye el módulo `sqlite3`, por lo que no es necesario instalar una biblioteca adicional para conectarse a SQLite.
 
-## 13. Enlaces del proyecto
+## 12. Enlaces del proyecto
 
 - **Repositorio de GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
 - **GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
