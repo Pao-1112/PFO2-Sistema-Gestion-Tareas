@@ -176,7 +176,7 @@ Desde el menú del cliente se pueden probar las operaciones disponibles.
 
 Se realizaron pruebas para verificar el funcionamiento de los componentes principales del proyecto:
 
-- Inicio del servidor Flask.
+- Inicio del servidor Flask. 
 - Registro exitoso de un usuario.
 - Manejo del intento de registrar un usuario existente.
 - Inicio de sesión con credenciales correctas.
@@ -184,9 +184,18 @@ Se realizaron pruebas para verificar el funcionamiento de los componentes princi
 - Respuesta del endpoint `GET /tareas`.
 - Verificación del almacenamiento de la contraseña mediante un hash en SQLite.
 
-Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/` del repositorio. El documento `Evidencias_PFO2.pdf` reúne las evidencias de las pruebas y las respuestas a las preguntas conceptuales solicitadas en la consigna.
+### 9. Evidencias de ejecución
 
-## 9. Solución de problemas
+- Las evidencias corresponden a las siguientes pruebas:
+- Inicio del servidor Flask (servidor.png y servidor1.png).
+- Registro exitoso de un usuario (registro.png).
+- Inicio de sesión correcto (login.png).
+- Consulta de la página HTML de bienvenida (tareas.png).
+- Verificación del hash almacenado en SQLite (hash_sqlite.png y hash_sqlite1.png).
+
+Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/` del repositorio.
+
+## 10. Solución de problemas
 
 - **Python no se reconoce como comando:** verificar que esté instalado y disponible en el PATH. En Windows también se puede probar `py servidor.py`.
 - **Faltan módulos:** ejecutar `python -m pip install -r requirements.txt`.
@@ -194,7 +203,7 @@ Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/
 - **El cliente no se conecta:** comprobar que el servidor esté activo y que el cliente utilice la dirección y el puerto correctos.
 - **No se encuentra el usuario:** verificar que se esté utilizando la misma base de datos `usuarios.db` y que las credenciales sean correctas.
 
-## 10. Enlaces del proyecto
+## 11. Enlaces del proyecto
 
 - **Repositorio de GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
 - **GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
