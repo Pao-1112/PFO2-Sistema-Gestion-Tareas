@@ -1,63 +1,42 @@
-# API REST de Tareas con Flask
+# Sistema de Gestión de Tareas con API y Base de Datos
 
 ## 1. Descripción del proyecto
 
-Este proyecto consiste en el desarrollo de una API REST utilizando Python y Flask, con una base de datos SQLite para almacenar usuarios y gestionar el registro y la autenticación.
+Este proyecto consiste en el desarrollo de una API con Flask y SQLite que permite registrar usuarios, validar sus credenciales y comprobar el funcionamiento del servidor mediante un endpoint de prueba.
 
-La aplicación permite registrar usuarios, iniciar sesión mediante credenciales y acceder a un endpoint que muestra una página HTML de bienvenida.
+El sistema almacena los usuarios en una base de datos SQLite y utiliza hashes para proteger las contraseñas almacenadas.
 
-Además, las contraseñas se almacenan mediante un hash para evitar guardarlas en texto plano.
+La aplicación cuenta con un servidor (`servidor.py`) y un cliente por consola (`cliente.py`) que permite interactuar con la API mediante un menú de opciones.
 
 ## 2. Tecnologías utilizadas
 
 - **Python:** lenguaje de programación.
-- **Flask:** framework para desarrollar la API REST.
-- **SQLite:** sistema de base de datos para almacenar los usuarios.
-- **Werkzeug:** biblioteca utilizada para generar y verificar hashes de contraseñas.
-- **Requests:** biblioteca utilizada por el cliente de consola para realizar solicitudes HTTP.
+- **Flask:** framework para desarrollar la API.
+- **SQLite:** base de datos para almacenar los usuarios.
+- **Werkzeug:** biblioteca utilizada para generar y verificar los hashes de las contraseñas.
+- **Requests:** biblioteca utilizada por el cliente para enviar solicitudes HTTP al servidor.
 
 ## 3. Funcionalidades
 
-La aplicación cuenta con las siguientes funcionalidades:
-
 - Registro de usuarios.
-- Validación de campos obligatorios.
-- Prevención del registro de usuarios duplicados.
-- Inicio de sesión mediante usuario y contraseña.
-- Almacenamiento de contraseñas mediante hash.
-- Página HTML de bienvenida accesible mediante el endpoint `/tareas`.
-- Manejo de respuestas HTTP para indicar resultados y errores.
+- Validación de los campos obligatorios.
+- Detección de usuarios duplicados.
+- Inicio de sesión mediante la verificación de credenciales.
+- Almacenamiento de contraseñas mediante hashes.
+- Consulta del endpoint de prueba `/tareas`.
+- Respuestas HTTP que permiten identificar el resultado de las solicitudes.
 
-## 4. Endpoints disponibles
+## 4. Endpoints de la API
 
-### POST /registro
+### 4.1. Registro de usuarios
 
-Permite registrar un usuario nuevo.
+**Método:** `POST`
 
-**Datos de entrada (JSON):**
+**Endpoint:** `/registro`
 
-```json
-{
-  "usuario": "nombre",
-  "contraseña": "1234"
-}
-```
+Permite registrar un usuario en la base de datos.
 
-**Respuesta exitosa (HTTP 201):**
-
-```json
-{
-  "mensaje": "Usuario registrado correctamente."
-}
-```
-
-Si se intenta registrar un usuario que ya existe, la API devuelve el código HTTP `409 Conflict`.
-
-### POST /login
-
-Permite autenticar a un usuario registrado.
-
-**Datos de entrada (JSON):**
+**Ejemplo de solicitud JSON:**
 
 ```json
 {
@@ -66,51 +45,89 @@ Permite autenticar a un usuario registrado.
 }
 ```
 
-**Respuesta exitosa (HTTP 200):**
+**Respuestas principales:**
+
+- `201 Created`: usuario registrado correctamente.
+- `400 Bad Request`: faltan datos obligatorios o la solicitud no contiene datos JSON válidos.
+- `409 Conflict`: el usuario ya existe.
+
+### 4.2. Inicio de sesión
+
+**Método:** `POST`
+
+**Endpoint:** `/login`
+
+Permite verificar las credenciales de un usuario registrado.
+
+**Ejemplo de solicitud JSON:**
 
 ```json
 {
-  "mensaje": "Inicio de sesión correcto.",
-  "usuario": "nombre"
+  "usuario": "nombre",
+  "contraseña": "1234"
 }
 ```
 
-Si el usuario no existe o la contraseña es incorrecta, la API devuelve el código HTTP `401 Unauthorized`.
+**Respuestas principales:**
 
-### GET /tareas
+- `200 OK`: inicio de sesión correcto.
+- `400 Bad Request`: faltan datos obligatorios o la solicitud no contiene datos JSON válidos.
+- `401 Unauthorized`: usuario o contraseña incorrectos.
+
+### 4.3. Consulta de tareas
+
+**Método:** `GET`
+
+**Endpoint:** `/tareas`
 
 Devuelve una página HTML de bienvenida que permite comprobar que el servidor Flask está funcionando correctamente.
 
-- **Método:** GET.
-- **URL local:** http://127.0.0.1:5000/tareas
+**URL local:** `http://127.0.0.1:5000/tareas`
 
-## 5. Base de datos SQLite
+Este endpoint es una respuesta de prueba. No implementa operaciones de creación, consulta, modificación o eliminación de tareas almacenadas en una base de datos.
 
-La aplicación utiliza una base de datos llamada `usuarios.db`.
+## 5. Cliente de la API
 
-La tabla `usuarios` contiene los siguientes campos:
+El archivo `cliente.py` permite interactuar con el servidor mediante un menú por consola.
+
+Las opciones disponibles son:
+
+1. **Registrar usuario:** solicita un nombre de usuario y una contraseña, y envía los datos al endpoint `POST /registro`.
+2. **Iniciar sesión:** solicita las credenciales y las envía al endpoint `POST /login` para validar el acceso.
+3. **Consultar tareas:** realiza una solicitud `GET /tareas` y muestra la respuesta HTML recibida del servidor.
+4. **Salir:** finaliza la ejecución del cliente.
+
+El cliente utiliza la biblioteca `Requests` para comunicarse con el servidor local mediante la dirección `http://127.0.0.1:5000`.
+
+## 6. Base de datos y seguridad
+
+La base de datos `usuarios.db` se crea automáticamente al iniciar el servidor, si todavía no existe.
+
+Contiene la tabla `usuarios`, con los siguientes campos:
 
 | Campo | Descripción |
 |---|---|
 | `id` | Identificador único del usuario. |
-| `usuario` | Nombre de usuario, único y obligatorio. |
-| `contraseña` | Hash de la contraseña, almacenado como texto. |
+| `usuario` | Nombre de usuario, obligatorio y único. |
+| `contraseña` | Hash de la contraseña almacenada. |
 
-La tabla se crea automáticamente cuando se inicia la aplicación, si todavía no existe.
+Para proteger las contraseñas se utilizan las funciones `generate_password_hash()` y `check_password_hash()` de Werkzeug.
 
-Las contraseñas se procesan mediante las funciones `generate_password_hash()` y `check_password_hash()` de Werkzeug. Al registrar un usuario, se genera un hash antes de almacenar la contraseña. Durante el inicio de sesión, se verifica la contraseña ingresada contra el hash almacenado.
+Las contraseñas no se almacenan directamente en texto plano. Al iniciar sesión, el sistema verifica la contraseña ingresada utilizando el hash guardado en la base de datos.
 
-## 6. Instalación y ejecución
+Además, las consultas SQL utilizan parámetros para evitar incorporar directamente los datos ingresados por el usuario en las sentencias SQL.
 
-### 6.1. Requisitos previos
+## 7. Instalación y ejecución
 
-- Tener Python instalado.
-- Contar con los archivos del proyecto.
-- Disponer de una terminal para ejecutar los comandos.
+### 7.1. Requisitos previos
 
-### 6.2. Obtener los archivos del proyecto
+- Python instalado.
+- Git instalado para clonar el repositorio.
+- Las dependencias especificadas en `requirements.txt`.
 
-Clonar el repositorio de GitHub:
+### 7.2. Clonar el repositorio
+
+Clonar el repositorio de GitHub desde la terminal:
 
 ```bash
 git clone https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas.git
@@ -122,115 +139,62 @@ Ingresar a la carpeta del proyecto:
 cd PFO2-Sistema-Gestion-Tareas
 ```
 
-También es posible descargar el repositorio como archivo ZIP desde GitHub y descomprimirlo.
+También es posible descargar el repositorio como archivo ZIP desde GitHub y descomprimirlo en la computadora.
 
-### 6.3. Instalar las dependencias
 
-Abrir una terminal en la carpeta del proyecto y ejecutar:
+### 7.3. Instalar las dependencias
+
+Ejecutar el siguiente comando desde la carpeta del proyecto:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-El archivo `requirements.txt` contiene las dependencias necesarias para ejecutar la aplicación.
+### 7.4. Ejecutar el servidor
 
-Si el comando `pip` no funciona, se puede intentar con:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 6.4. Ejecutar el servidor
-
-Ejecutar el siguiente comando:
+En una terminal, ejecutar:
 
 ```bash
 python servidor.py
 ```
 
-El servidor estará disponible en:
+El servidor se iniciará en la dirección local `http://127.0.0.1:5000`.
 
-http://127.0.0.1:5000
+### 7.5. Ejecutar el cliente
 
-La base de datos `usuarios.db` y la tabla `usuarios` se crean automáticamente al iniciar el servidor, si todavía no existen.
-
-Se debe mantener abierta la terminal del servidor mientras se realizan las pruebas.
-
-### 6.5. Ejecutar el cliente de consola
-
-Abrir una segunda terminal, dentro de la carpeta del proyecto, y ejecutar:
+Abrir una segunda terminal, ubicarse en la carpeta del proyecto y ejecutar:
 
 ```bash
 python cliente.py
 ```
 
-El cliente permite interactuar con la API para registrar usuarios, iniciar sesión y consultar el endpoint de tareas.
+Desde el menú del cliente se pueden probar las operaciones disponibles.
 
-### 6.6. Probar el sistema
+**Importante:** el servidor debe permanecer en ejecución mientras se utiliza el cliente. Si se intenta registrar un usuario que ya existe, se deberá utilizar otro nombre de usuario o iniciar sesión con las credenciales correspondientes.
 
-Para comprobar el funcionamiento de la aplicación:
+## 8. Pruebas realizadas
 
-1. Iniciar el servidor con `python servidor.py`.
-2. Abrir una segunda terminal y ejecutar `python cliente.py`.
-3. Registrar un usuario utilizando las credenciales indicadas por la consigna: usuario `nombre` y contraseña `1234`.
-4. Iniciar sesión con esas credenciales.
-5. Consultar el endpoint de tareas.
-6. Verificar que las operaciones devuelvan las respuestas esperadas.
+Se realizaron pruebas para verificar el funcionamiento de los componentes principales del proyecto:
 
-Si el usuario ya fue registrado anteriormente en la base de datos, no es necesario registrarlo otra vez para probar el inicio de sesión.
-
-## 7. Pruebas realizadas
-
-Se realizaron pruebas para verificar el funcionamiento de la API:
-
+- Inicio del servidor Flask.
 - Registro exitoso de un usuario.
-- Intento de registro de un usuario existente.
+- Manejo del intento de registrar un usuario existente.
 - Inicio de sesión con credenciales correctas.
-- Inicio de sesión con contraseña incorrecta.
-- Validación de campos obligatorios.
-- Consulta del endpoint `GET /tareas`.
-- Verificación del almacenamiento de contraseñas mediante hash en SQLite.
+- Rechazo de credenciales incorrectas.
+- Respuesta del endpoint `GET /tareas`.
+- Verificación del almacenamiento de la contraseña mediante un hash en SQLite.
 
-## 8. Evidencias de ejecución
+Las capturas de pantalla correspondientes se encuentran en la carpeta `capturas/` del repositorio. El documento `Evidencias_PFO2.pdf` reúne las evidencias de las pruebas y las respuestas a las preguntas conceptuales solicitadas en la consigna.
 
-En la carpeta `capturas/` se incluyen imágenes que documentan el funcionamiento de la aplicación.
+## 9. Solución de problemas
 
-Las evidencias corresponden a las siguientes pruebas:
-
-- Inicio del servidor Flask (`servidor.png` y `servidor1.png`).
-- Registro exitoso de un usuario (`registro.png`).
-- Inicio de sesión correcto (`login.png`).
-- Consulta de la página HTML de bienvenida (`tareas.png`).
-- Verificación del hash almacenado en SQLite (`hash_sqlite.png` y `hash_sqlite1.png`).
-
-## 9. Configuración del entorno de desarrollo
-
-Se recomienda utilizar Visual Studio Code u otro editor compatible con Python.
-
-### Selección del intérprete de Python en Visual Studio Code
-
-Si el proyecto no se ejecuta correctamente, verificar que Visual Studio Code esté utilizando una instalación válida de Python.
-
-Para seleccionar el intérprete:
-
-1. Abrir la carpeta del proyecto en Visual Studio Code.
-2. Presionar `Ctrl + Shift + P`.
-3. Buscar la opción `Python: Select Interpreter`.
-4. Seleccionar la instalación de Python correspondiente al entorno de trabajo.
-
-Si se utiliza un entorno virtual, debe seleccionarse el intérprete de ese entorno y asegurarse de que las dependencias estén instaladas allí.
-
-La carpeta `.vscode/` contiene configuraciones locales del editor y no es necesaria para ejecutar la aplicación. Por este motivo, se excluye del repositorio mediante el archivo `.gitignore`.
-
-### Solución de problemas frecuentes
-
-- **Python no se reconoce como comando:** comprobar que esté instalado y disponible en el PATH del sistema. En Windows también se puede intentar ejecutar `py servidor.py`.
-- **No se encuentra Flask o Requests:** instalar las dependencias con `python -m pip install -r requirements.txt`.
-- **El puerto 5000 está ocupado:** verificar que no exista otra aplicación utilizando ese puerto.
-- **No se puede conectar con el servidor:** comprobar que `servidor.py` siga ejecutándose y que el cliente utilice la dirección `http://127.0.0.1:5000`.
-- **No aparecen los usuarios registrados:** comprobar que se esté utilizando el mismo archivo `usuarios.db` y que el servidor se ejecute desde la carpeta correcta.
+- **Python no se reconoce como comando:** verificar que esté instalado y disponible en el PATH. En Windows también se puede probar `py servidor.py`.
+- **Faltan módulos:** ejecutar `python -m pip install -r requirements.txt`.
+- **El puerto 5000 está ocupado:** detener el proceso que lo utiliza antes de iniciar el servidor.
+- **El cliente no se conecta:** comprobar que el servidor esté activo y que el cliente utilice la dirección y el puerto correctos.
+- **No se encuentra el usuario:** verificar que se esté utilizando la misma base de datos `usuarios.db` y que las credenciales sean correctas.
 
 ## 10. Enlaces del proyecto
 
-- **Repositorio en GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
-- **Documentación publicada en GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
+- **Repositorio de GitHub:** https://github.com/pao-1112/PFO2-Sistema-Gestion-Tareas
+- **GitHub Pages:** https://pao-1112.github.io/PFO2-Sistema-Gestion-Tareas/
