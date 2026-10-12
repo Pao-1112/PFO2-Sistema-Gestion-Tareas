@@ -150,6 +150,12 @@ Ejecutar el siguiente comando desde la carpeta del proyecto:
 pip install -r requirements.txt
 ```
 
+Si el comando pip no funciona, se puede intentar con:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
 ### 7.4. Ejecutar el servidor
 
 En una terminal, ejecutar:
@@ -167,10 +173,24 @@ Abrir una segunda terminal, ubicarse en la carpeta del proyecto y ejecutar:
 ```bash
 python cliente.py
 ```
+### 7.6. Probar el sistema
 
-Desde el menú del cliente se pueden probar las operaciones disponibles.
+Desde el menú del cliente se pueden probar las operaciones disponibles:
 
-**Importante:** el servidor debe permanecer en ejecución mientras se utiliza el cliente. Si se intenta registrar un usuario que ya existe, se deberá utilizar otro nombre de usuario o iniciar sesión con las credenciales correspondientes.
+- Registrar un usuario utilizando las credenciales indicadas por la consigna: usuario "nombre" y contraseña "1234".
+- Iniciar sesión con esas credenciales.
+- Consultar el endpoint de tareas.
+- Verificar que las operaciones devuelvan las respuestas esperadas.
+
+**Importante:** si el usuario ya fue registrado en la base de datos, no es necesario registrarlo nuevamente para probar el inicio de sesión. Simplemente seleccioná la opción correspondiente e ingresá las credenciales utilizadas durante el registro.
+
+Si intentás registrar otra vez el mismo usuario, el sistema mostrará un mensaje indicando que ya existe.
+
+Si deseás comenzar las pruebas con una base de datos vacía, detené la ejecución del servidor y eliminá el archivo `usuarios.db`. Al iniciar nuevamente `servidor.py`, se creará una nueva base de datos vacía y podrás registrar usuarios desde cero.
+
+**Precaución**: eliminar `usuarios.db` borra todos los usuarios almacenados en esa base de datos.
+
+**Aclaración:** el servidor debe permanecer en ejecución mientras se utiliza el cliente. Si se intenta registrar un usuario que ya existe, se deberá utilizar otro nombre de usuario o iniciar sesión con las credenciales correspondientes.
 
 ## 8. Pruebas realizadas
 
